@@ -1,0 +1,27 @@
+#homeHeader {
+    background-color: #ff9999;
+    padding: 8px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#releasedMovies {
+    display: flex;
+    direction: row;
+    justify-content: flex-start;
+    height: fit-content;
+}
+
+#releasedMovieChild1 {
+    flex-basis: 76%;
+    margin: 16px;
+}
+
+#releasedMovieChild2 {
+    flex-basis: 24%;
+    margin: 16px;
+}
+
+.releasedMovieImage {
+    cursor: pointer;
+}
