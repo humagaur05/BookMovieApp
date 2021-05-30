@@ -1,0 +1,28 @@
+.custom-btn {
+    margin-left: 24px ;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    height: 24px;
+    cursor: pointer;
+}
+
+#movieDetails {
+    display: flex;
+    height: fit-content;
+}
+
+#movieDetailsLeft {
+    flex-basis: 20%;
+}
+
+#movieDetailsMiddle {
+    flex-basis: 60%;
+}
+
+#movieDetailsRight {
+    flex-basis: 20%;
+}   
+
+#artistTitle {
+    margin: 12px 0px;
+}
