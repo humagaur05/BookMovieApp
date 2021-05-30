@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Home.css'
 import { Fragment } from 'react';
 import Header from './../../common/header/Header.js'
-import { Button, Card, CardContent, CardHeader, Checkbox, FormControl, FormHelperText, GridList, GridListTile, GridListTileBar, Input, InputLabel, ListItem, ListItemText, MenuItem, Select, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, Checkbox, FormControl, FormHelperText, GridList, GridListTile, GridListTileBar, Input, InputLabel, ListItem, ListItemText, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import { createMuiTheme} from "@material-ui/core/styles";
 import { blue, red } from '@material-ui/core/colors';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -155,20 +155,21 @@ const Home = function(props) {
                     <Card>
                     
                         <CardContent >
+                        <Typography variant="headline" component="h3" style={{color:createMuiTheme().palette.primary.light}}>
+                            FIND MOVIES BY:
+                        </Typography>
 
-                        <h4 style={{color:createMuiTheme().palette.primary.light}}> FIND MOVIES BY: </h4>
-
-                        <FormControl>
-
+                        <FormControl  className="filterFormControl">
                             <TextField
+                                label="Movie Name" 
                                 id="movieName"
-                                label="Movie Name"
                                 type="text"
                                 name="movieName"
                                 onChange={inputChangedHandler}
                                 value={movieName}
                                 style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}>
                             </TextField>
+                            </FormControl>
 
                             
                             {/* <Select label="Genre" id="selectedGenres" name="selectedGenres" multiple  value={selectedGenres} onChange={inputChangedHandler} 
@@ -181,7 +182,23 @@ const Home = function(props) {
                                 ))}
                             </Select> */}
 
-                            <Select label="Artist" id="selectedArtists" name="selectedArtists" multiple  value={selectedArtists} onChange={inputChangedHandler} 
+                            <FormControl>
+                                <InputLabel htmlFor="selectedGenres" style={{ marginLeft: createMuiTheme().spacing.unit}}>Genre</InputLabel>
+                                <Select label="Genre" id="selectedGenres" name="selectedGenres" multiple  value={selectedGenres} onChange={inputChangedHandler} 
+                                    value={selectedGenres} renderValue={(data) => data.join(", ")} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}>
+                                    {genres.map((genreItem) => (
+                                    <MenuItem key={genreItem.id} value={genreItem.genre}>
+                                        <Checkbox checked={isGenreSelected(genreItem)} />
+                                        <ListItemText primary={genreItem.genre} />
+                                    </MenuItem>
+                                    ))};
+                                </Select>
+                                
+                            </FormControl>
+
+                            <FormControl>
+                            <InputLabel htmlFor="selectedArtists" style={{ marginLeft: createMuiTheme().spacing.unit}}>Artist</InputLabel>
+                            <Select id="selectedArtists" name="selectedArtists" multiple  value={selectedArtists} onChange={inputChangedHandler} 
                              renderValue={(artistData) => artistData.join(", ")} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}>
                                 {artists.map((artistItem) => (
                                 <MenuItem key={artistItem.id} value={artistItem.first_name + " " + artistItem.last_name}>
@@ -190,13 +207,19 @@ const Home = function(props) {
                                 </MenuItem>
                                 ))}
                             </Select>
+                            </FormControl>
 
-
-                          <TextField type="date" id="selectedReleaseDateStart" name="selectedReleaseDateStart" value={selectedReleaseDateStart} label="Release date start" onChange={inputChangedHandler}></TextField>
-                          <TextField type="date" id="selectedReleaseDateEnd" name="selectedReleaseDateEnd" value={selectedReleaseDateEnd} label="Release date end" onChange={inputChangedHandler}></TextField>
+                            <FormControl>
+                                <TextField type="date" id="selectedReleaseDateStart" name="selectedReleaseDateStart" value={selectedReleaseDateStart} label="Release date start" onChange={inputChangedHandler} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}></TextField>
+                            </FormControl>
                           
-                          <Button variant="contained" color="primary" onClick={applyFilter}> APPLY </Button>
-                        </FormControl>
+                            <FormControl>
+                                <TextField type="date" id="selectedReleaseDateEnd" name="selectedReleaseDateEnd" value={selectedReleaseDateEnd} label="Release date end" onChange={inputChangedHandler} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}></TextField>
+                            </FormControl>
+                                <br/><br/>
+                            <FormControl>
+                                    <Button variant="contained" color="primary" onClick={applyFilter} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}> APPLY </Button>
+                          </FormControl>
                         </CardContent>
                     </Card>
                 </div>
