@@ -48,6 +48,13 @@ const Details = function(props) {
         e.target.style.color = 'yellow'
     }
 
+    function getReleaseDate(movie) {
+        let date = new Date(movie.release_date)
+        const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+        const requiredDate = date.toLocaleDateString("en-US", options)
+        return requiredDate
+    }
+
     return(
         <Fragment>
         <Header isLoggedIn={false} isDetailsPage={true} movieId={props.match.params.id}></Header>
@@ -62,7 +69,7 @@ const Details = function(props) {
             <Typography variant="headline" component="h2" gutterBottom>{movieDetails.title}</Typography>
             <Typography variant="body1" gutterBottom><b>Genre: </b>{movieDetails.genres.join(", ")}</Typography>
             <Typography variant="body1" gutterBottom><b>Duration: </b>{movieDetails.duration}</Typography>
-            <Typography variant="body1" gutterBottom><b>Release Date: </b>{Date(movieDetails.release_date)}</Typography>
+            <Typography variant="body1" gutterBottom><b>Release Date: </b>{getReleaseDate(movieDetails)}</Typography>
             <Typography variant="body1" gutterBottom><b>Rating: </b>{movieDetails.rating}</Typography>
             <br/>
             <Typography variant="body1" gutterBottom><b>Plot: </b>(<a href={movieDetails.wiki_url}>Wiki Link</a>) {movieDetails.storyline}</Typography>
