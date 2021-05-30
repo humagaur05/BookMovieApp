@@ -6,27 +6,22 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const Header =  function Header(props) {
 
     const buttonText = props.isLoggedIn ? "Logout" : "Login"
-
-    const styles = theme => ({
-        buttonPadding: {    
-          padding: '30px',   
-        },
-      });
     
     if(!props.isDetailsPage) {
     return(
         <div className="header">
-           <img id="headerIcon" src={logo} alt="logo" />
+           <img id="headerIcon" src={logo} alt="logo" className="rotate"/>
             <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
         </div>
     );
     } else {
         return(
             <div className="header">
-               <img id="headerIcon" src={logo} alt="logo" />
+               <img src={logo} alt="logo" className="rotate"/>
                <span>
                <Link to={"/bookshow/" + props.movieId}>
                     <Button id="bookButton" variant="contained" color="primary"> Book show </Button>

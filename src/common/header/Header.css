@@ -9,12 +9,21 @@
     justify-content: space-between;
 }
 
-#headerIcon {
-    background-color: #ff7f7f;
-    height: 35px;
-}
-
-
 #spaceSpan {
     margin-right: 10px;
 }
+
+.rotate {
+    background-color: #ff7f7f;
+    height: 35px;
+    animation: rotation 8s infinite linear;
+  }
+  
+  @keyframes rotation {
+    from {
+      transform: rotate3d(0, 1, 0, 0deg);
+    }
+    to {
+      transform: rotate3d(0, 1, 0, 359deg);
+    }
+  }
