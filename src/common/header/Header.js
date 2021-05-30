@@ -2,6 +2,7 @@ import React from 'react'
 import './Header.css'
 import logo from './../../assets/logo.svg';
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 
 
@@ -27,7 +28,9 @@ const Header =  function Header(props) {
             <div className="header">
                <img id="headerIcon" src={logo} alt="logo" />
                <span>
+               <Link to={"/bookshow/" + props.movieId}>
                     <Button id="bookButton" variant="contained" color="primary"> Book show </Button>
+                </Link>
                     <span id="spaceSpan"></span>
                     <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
                 </span>    

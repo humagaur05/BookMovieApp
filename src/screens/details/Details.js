@@ -50,9 +50,9 @@ const Details = function(props) {
 
     return(
         <Fragment>
-        <Header isLoggedIn={false} isDetailsPage={true}></Header>
+        <Header isLoggedIn={false} isDetailsPage={true} movieId={props.match.params.id}></Header>
         <Link to="/">
-            <Typography className="custom-btn" variant="button" display="block" gutterBottom>{"< Back to Home"}</Typography>
+            <Typography className="custom-btn" variant="button" display="block" gutterBottom> &#60; Back to Home</Typography>
         </Link>
         <div id="movieDetails">
             <div id="movieDetailsLeft">
