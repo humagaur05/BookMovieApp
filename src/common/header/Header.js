@@ -23,20 +23,20 @@ const Header =  function Header(props) {
             <div className="header">
                <img src={logo} alt="logo" className="rotate"/>
                <span>
-             {
-                 props.isDetails ? 
-                <Link to={isLoggedIn ? ("/bookshow/" + props.movieId) : "/modal" }>
-                    <Button id="bookButton" variant="contained" color="primary"> Book show </Button>
-                </Link> : null
-             }
-                    <span id="spaceSpan"></span>
-                    {
-                        !isLoggedIn ? 
-                        <Link to={"/modal"}>
-                            <Button id="loginButton" variant="contained" color="default"> {loginButtonText}</Button>
-                        </Link> : 
+                {
+                    props.isDetails ? 
+                    <Link to={isLoggedIn ? ("/bookshow/" + props.movieId) : "/modal" }>
+                        <Button id="bookButton" variant="contained" color="primary"> Book show </Button>
+                    </Link> : null
+                }
+                <span id="spaceSpan"></span>
+                {
+                    !isLoggedIn ? 
+                    <Link to={"/modal"}>
                         <Button id="loginButton" variant="contained" color="default"> {loginButtonText}</Button>
-                    }
+                    </Link> : 
+                    <Button id="loginButton" variant="contained" color="default"> {loginButtonText}</Button>
+                }
                     
                 </span>    
             </div>

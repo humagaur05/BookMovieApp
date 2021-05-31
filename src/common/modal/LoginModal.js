@@ -102,30 +102,30 @@ const [showRegLabel, setShowRegLabel] = useState(false)
  //Register form related methods
 
  const registerFormChangeHandler = (e) => {
-  const state = registerForm;
-  state[e.target.name] = e.target.value;
-  setRegisterForm({...state})
+    const state = registerForm;
+    state[e.target.name] = e.target.value;
+    setRegisterForm({...state})
 }
 
  const registerButtonHandler = () => {
-  setShowRegLabel(false);
-  registerForm.firstname === "" ? setReqFirstname("dispBlock") : setReqFirstname("dispNone");
-  registerForm.lastname === "" ? setReqLastName("dispBlock") : setReqLastName("dispNone");
-  registerForm.email === "" ? setReqEmail("dispBlock") : setReqEmail("dispNone");
-  registerForm.password === "" ? setReqRegisterPassword("dispBlock") : setReqRegisterPassword("dispNone");
-  registerForm.contact === "" ? setReqContact("dispBlock") : setReqContact("dispNone");
+    setShowRegLabel(false);
+    registerForm.firstname === "" ? setReqFirstname("dispBlock") : setReqFirstname("dispNone");
+    registerForm.lastname === "" ? setReqLastName("dispBlock") : setReqLastName("dispNone");
+    registerForm.email === "" ? setReqEmail("dispBlock") : setReqEmail("dispNone");
+    registerForm.password === "" ? setReqRegisterPassword("dispBlock") : setReqRegisterPassword("dispNone");
+    registerForm.contact === "" ? setReqContact("dispBlock") : setReqContact("dispNone");
   
   
-  if (
-    registerForm.firstname === "" ||
-    registerForm.lastname === "" ||
-    registerForm.email === "" ||
-    registerForm.password === "" ||
-    registerForm.contact === ""
-  ) {
-    return;
-  }
-  sendRegisterRequest()
+    if (
+      registerForm.firstname === "" ||
+      registerForm.lastname === "" ||
+      registerForm.email === "" ||
+      registerForm.password === "" ||
+      registerForm.contact === ""
+    ) {
+      return;
+    }
+    sendRegisterRequest()
   };
 
   const sendRegisterRequest = () => {
@@ -174,42 +174,40 @@ otherwise, show register div
         overlayClassName="myoverlay"
         closeTimeoutMS={500}
       >
-        <div>
-        <Tabs
-          value={selectedTab}
-          onChange={tabChangeHandler}
-          indicatorColor="secondary"
-          textColor="primary"
-          centered
-        >
-        <Tab label="LOGIN">
-        </Tab>
-        <Tab label="REGISTER" />
-      </Tabs>
-       
-       {
-        (selectedTab == 0) ? 
+          <div>
+            <Tabs
+              value={selectedTab}
+              onChange={tabChangeHandler}
+              indicatorColor="secondary"
+              textColor="primary"
+              centered
+            >
+              <Tab label="LOGIN"/>
+              <Tab label="REGISTER" />
+            </Tabs>
         
-        <LoginDiv
-          loginForm={loginForm} 
-          loginFormChangeHandler={loginFormChangeHandler} 
-          loginButtonHandler={loginButtonHandler}
-          reqUserName={reqUserName} 
-          reqPassword={reqPassword}
-        /> : 
-        <RegisterDiv
-        registerForm={registerForm}
-        registerFormChangeHandler={registerFormChangeHandler}
-        registerButtonHandler={registerButtonHandler}
-        reqFirstname={reqFirstname} 
-        reqLastName={reqLastName} 
-        reqEmail={reqEmail}
-        reqRegisterPassword={reqRegisterPassword} 
-        reqContact={reqContact}
-        showRegLabel={showRegLabel}
-        />
-       }
-        </div>
+          {
+            (selectedTab == 0) ? 
+            <LoginDiv
+              loginForm={loginForm} 
+              loginFormChangeHandler={loginFormChangeHandler} 
+              loginButtonHandler={loginButtonHandler}
+              reqUserName={reqUserName} 
+              reqPassword={reqPassword}
+            /> : 
+            <RegisterDiv
+            registerForm={registerForm}
+            registerFormChangeHandler={registerFormChangeHandler}
+            registerButtonHandler={registerButtonHandler}
+            reqFirstname={reqFirstname} 
+            reqLastName={reqLastName} 
+            reqEmail={reqEmail}
+            reqRegisterPassword={reqRegisterPassword} 
+            reqContact={reqContact}
+            showRegLabel={showRegLabel}
+            />
+          }
+          </div>
       </Modal>
     </div>
   );
@@ -225,41 +223,41 @@ function LoginDiv(props) {
 
   return (
   <div id="loginDiv">
-  <FormControl required className="formControl">
-      <InputLabel htmlFor="username">
-        Username
-      </InputLabel>
-      <Input
-        id="username" 
-        name="username"
-        value={loginForm.username}
-        onChange={loginFormChangeHandler}
-      />
-      <FormHelperText className={reqUserName}>
-        <span className="red">Required</span>
-      </FormHelperText>
-  </FormControl>
-  <br/>
-  <br/>
-  <FormControl required className="formControl">
-      <InputLabel htmlFor="password">
-        Password
-      </InputLabel>
-      <Input
-        id="password" 
-        name="password"
-        value={loginForm.password}
-        onChange={loginFormChangeHandler}
-      />
-      <FormHelperText className={reqPassword}>
-        <span className="red">Required</span>
-      </FormHelperText>
-  </FormControl>
-  <br/>
-  <br/>
-  <FormControl>
-      <Button variant="contained" color="primary" onClick={loginButtonHandler} className="formControl"> LOGIN </Button>
-  </FormControl>
+    <FormControl required className="formControl">
+        <InputLabel htmlFor="username">
+          Username
+        </InputLabel>
+        <Input
+          id="username" 
+          name="username"
+          value={loginForm.username}
+          onChange={loginFormChangeHandler}
+        />
+        <FormHelperText className={reqUserName}>
+          <span className="red">Required</span>
+        </FormHelperText>
+    </FormControl>
+    <br/>
+    <br/>
+    <FormControl required className="formControl">
+        <InputLabel htmlFor="password">
+          Password
+        </InputLabel>
+        <Input
+          id="password" 
+          name="password"
+          value={loginForm.password}
+          onChange={loginFormChangeHandler}
+        />
+        <FormHelperText className={reqPassword}>
+          <span className="red">Required</span>
+        </FormHelperText>
+    </FormControl>
+    <br/>
+    <br/>
+    <FormControl>
+        <Button variant="contained" color="primary" onClick={loginButtonHandler} className="formControl"> LOGIN </Button>
+    </FormControl>
 </div>
   );
 }

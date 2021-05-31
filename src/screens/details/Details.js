@@ -61,51 +61,51 @@ const Details = function(props) {
 
     return(
         <Fragment>
-        <Header isDetails={true} movieId={props.match.params.id}></Header>
-        <Link to="/">
-            <Typography className="custom-btn" variant="button" display="block" gutterBottom> &#60; Back to Home</Typography>
-        </Link>
-        <div id="movieDetails">
+            <Header isDetails={true} movieId={props.match.params.id}></Header>
+            <Link to="/">
+                <Typography className="custom-btn" variant="button" display="block" gutterBottom> &#60; Back to Home</Typography>
+            </Link>
+            <div id="movieDetails">
 
-            {/* Left part of screen */}
-            <div id="movieDetailsLeft">
-            <img src={movieDetails.poster_url} alt={movieDetails.title} />
-            </div>
-
-            {/* Middle part of screen showing movie info and trailer */}
-            <div id="movieDetailsMiddle">
-            <Typography variant="headline" component="h2" gutterBottom>{movieDetails.title}</Typography>
-            <Typography variant="body1" gutterBottom><b>Genre: </b>{movieDetails.genres.join(", ")}</Typography>
-            <Typography variant="body1" gutterBottom><b>Duration: </b>{movieDetails.duration}</Typography>
-            <Typography variant="body1" gutterBottom><b>Release Date: </b>{getReleaseDateInRequiredFormat(movieDetails)}</Typography>
-            <Typography variant="body1" gutterBottom><b>Rating: </b>{movieDetails.rating}</Typography>
-            <br/>
-            <Typography variant="body1" gutterBottom><b>Plot: </b>(<a href={movieDetails.wiki_url}>Wiki Link</a>) {movieDetails.storyline}</Typography>
-            <Typography style={{marginTop:'16px'}} variant="body1" gutterBottom><b>Trailer: </b><YouTube videoId={getVideoIdFromTrailerURL()}></YouTube></Typography>
-            
-            </div>
-
-            {/* Right part of screen showing star rating and artists*/}
-            <div id="movieDetailsRight">
-                <Typography variant="body1" gutterBottom><b>Rate this movie:</b></Typography>
-                <div>
-                    <StarBorderIcon id="star1" onClick={ratingTapped}></StarBorderIcon>
-                    <StarBorderIcon id="star2" onClick={ratingTapped}></StarBorderIcon>
-                    <StarBorderIcon id="star3" onClick={ratingTapped}></StarBorderIcon>
-                    <StarBorderIcon id="star4" onClick={ratingTapped}></StarBorderIcon>
-                    <StarBorderIcon id="star5" onClick={ratingTapped}></StarBorderIcon>
+                {/* Left part of screen */}
+                <div id="movieDetailsLeft">
+                    <img src={movieDetails.poster_url} alt={movieDetails.title} />
                 </div>
-                <Typography id="artistTitle" variant="body1" gutterBottom><b>Artists:</b></Typography>
-                <GridList cols={2}>
-                { movieDetails.artists.map((artist) => (
-                    <GridListTile key={artist.id}>
-                        <img src={artist.profile_url} alt={artist.first_name} />
-                        <GridListTileBar title={artist.first_name + " "+ artist.last_name}/>
-                    </GridListTile>
-                ))}
-            </GridList>
+
+                {/* Middle part of screen showing movie info and trailer */}
+                <div id="movieDetailsMiddle">
+                    <Typography variant="headline" component="h2" gutterBottom>{movieDetails.title}</Typography>
+                    <Typography variant="body1" gutterBottom><b>Genre: </b>{movieDetails.genres.join(", ")}</Typography>
+                    <Typography variant="body1" gutterBottom><b>Duration: </b>{movieDetails.duration}</Typography>
+                    <Typography variant="body1" gutterBottom><b>Release Date: </b>{getReleaseDateInRequiredFormat(movieDetails)}</Typography>
+                    <Typography variant="body1" gutterBottom><b>Rating: </b>{movieDetails.rating}</Typography>
+                    <br/>
+                    <Typography variant="body1" gutterBottom><b>Plot: </b>(<a href={movieDetails.wiki_url}>Wiki Link</a>) {movieDetails.storyline}</Typography>
+                    <Typography style={{marginTop:'16px'}} variant="body1" gutterBottom><b>Trailer: </b><YouTube videoId={getVideoIdFromTrailerURL()}></YouTube></Typography>
+                
+                </div>
+
+                {/* Right part of screen showing star rating and artists*/}
+                <div id="movieDetailsRight">
+                    <Typography variant="body1" gutterBottom><b>Rate this movie:</b></Typography>
+                    <div>
+                        <StarBorderIcon id="star1" onClick={ratingTapped}></StarBorderIcon>
+                        <StarBorderIcon id="star2" onClick={ratingTapped}></StarBorderIcon>
+                        <StarBorderIcon id="star3" onClick={ratingTapped}></StarBorderIcon>
+                        <StarBorderIcon id="star4" onClick={ratingTapped}></StarBorderIcon>
+                        <StarBorderIcon id="star5" onClick={ratingTapped}></StarBorderIcon>
+                    </div>
+                    <Typography id="artistTitle" variant="body1" gutterBottom><b>Artists:</b></Typography>
+                    <GridList cols={2}>
+                    { movieDetails.artists.map((artist) => (
+                        <GridListTile key={artist.id}>
+                            <img src={artist.profile_url} alt={artist.first_name} />
+                            <GridListTileBar title={artist.first_name + " "+ artist.last_name}/>
+                        </GridListTile>
+                    ))}
+                </GridList>
+                </div>
             </div>
-        </div>
         </Fragment>
     )
 }
