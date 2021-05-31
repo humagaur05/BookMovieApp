@@ -27,8 +27,8 @@ const Home = function(props) {
         movieName:'',
         selectedGenres:[],
         selectedArtists:[],
-        selectedReleaseDateStart:new Date('2099-01-01'),
-        selectedReleaseDateEnd:new Date('1500-01-01')
+        selectedReleaseDateStart: new Date('1500-01-01'),
+        selectedReleaseDateEnd:new Date('2099-01-01')
     });
 
     const inputChangedHandler = (e) => {
@@ -115,8 +115,8 @@ const Home = function(props) {
             const movieDate = new Date(movie.release_date)
             const releaseStartDate = new Date(filterMovieForm.selectedReleaseDateStart)
             const releaseEndDate = new Date(filterMovieForm.selectedReleaseDateEnd)
-            const isBeforeEndReleaseDate =  movieDate <= releaseEndDate || (releaseEndDate == Date('1500-01-01'))
-            const isAfterStartReleaseDate = movieDate >= releaseStartDate || (releaseStartDate ==  Date('2099-01-01'))
+            const isBeforeEndReleaseDate =  movieDate <= releaseEndDate
+            const isAfterStartReleaseDate = movieDate >= releaseStartDate 
             const isWithinDateRange = isBeforeEndReleaseDate && isAfterStartReleaseDate
             return (movieTitleMatched && genresMatched && artistsMatched && isWithinDateRange) 
         })

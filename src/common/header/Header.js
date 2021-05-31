@@ -9,33 +9,32 @@ import { Link } from 'react-router-dom';
 
 const Header =  function Header(props) {
 
-    const buttonText = props.isLoggedIn ? "Logout" : "Login"
-    
-    if(!props.isDetails) {
-    return(
-        <div className="header">
-           <img id="headerIcon" src={logo} alt="logo" className="rotate"/>
-           <Link to={"/modal"}>
-            <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
-            </Link>
-        </div>
-    );
-    } else {
+    const isLoggedIn = sessionStorage.getItem("access-token")
+
+    const buttonText = isLoggedIn ? "Logout" : "Login"
+
         return(
             <div className="header">
                <img src={logo} alt="logo" className="rotate"/>
                <span>
-               <Link to={"/bookshow/" + props.movieId}>
+             {
+                 props.isDetails ? 
+                <Link to={isLoggedIn ? ("/bookshow/" + props.movieId) : "/modal" }>
                     <Button id="bookButton" variant="contained" color="primary"> Book show </Button>
-                </Link>
+                </Link> : null
+             }
                     <span id="spaceSpan"></span>
-                    <Link to={"/modal"}>
+                    {
+                        !isLoggedIn ? 
+                        <Link to={"/modal"}>
+                            <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
+                        </Link> : 
                         <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
-                    </Link>
+                    }
+                    
                 </span>    
             </div>
         );
-    }
 }
 
 export default Header;
