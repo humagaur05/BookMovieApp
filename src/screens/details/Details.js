@@ -7,13 +7,14 @@ import Header from '../../common/header/Header';
 import YouTube from 'react-youtube';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-
-
-
-// const {id} = useParams();
+/*
+Details page is divided into left, middle and right parts. 
+Achieved using diplay flex 
+*/
 
 const Details = function(props) {
 
+    //Movie details state
     const [movieDetails, setMovieDetails] = useState({
         title:"",
         genres:[],
@@ -26,6 +27,7 @@ const Details = function(props) {
         artists:[]
     });
 
+    //Movie rating state to populate the star rating UI
     const [movieRating, setMovieRating] = useState(0);
 
     useEffect(() => {
@@ -38,17 +40,19 @@ const Details = function(props) {
         });
     }, [])
 
+    //Utility method to extract video id from the trailer url
     function getVideoIdFromTrailerURL() {
         const url = movieDetails.trailer_url
         const splitItems = url.split('=')
         return splitItems[1]
     }
 
+    // Function to change the color of clicked star to yellow
     function ratingTapped(e) {
         e.target.style.color = 'yellow'
     }
 
-    function getReleaseDate(movie) {
+    function getReleaseDateInRequiredFormat(movie) {
         let date = new Date(movie.release_date)
         const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
         const requiredDate = date.toLocaleDateString("en-US", options)
@@ -62,20 +66,26 @@ const Details = function(props) {
             <Typography className="custom-btn" variant="button" display="block" gutterBottom> &#60; Back to Home</Typography>
         </Link>
         <div id="movieDetails">
+
+            {/* Left part of screen */}
             <div id="movieDetailsLeft">
             <img src={movieDetails.poster_url} alt={movieDetails.title} />
             </div>
+
+            {/* Middle part of screen showing movie info and trailer */}
             <div id="movieDetailsMiddle">
             <Typography variant="headline" component="h2" gutterBottom>{movieDetails.title}</Typography>
             <Typography variant="body1" gutterBottom><b>Genre: </b>{movieDetails.genres.join(", ")}</Typography>
             <Typography variant="body1" gutterBottom><b>Duration: </b>{movieDetails.duration}</Typography>
-            <Typography variant="body1" gutterBottom><b>Release Date: </b>{getReleaseDate(movieDetails)}</Typography>
+            <Typography variant="body1" gutterBottom><b>Release Date: </b>{getReleaseDateInRequiredFormat(movieDetails)}</Typography>
             <Typography variant="body1" gutterBottom><b>Rating: </b>{movieDetails.rating}</Typography>
             <br/>
             <Typography variant="body1" gutterBottom><b>Plot: </b>(<a href={movieDetails.wiki_url}>Wiki Link</a>) {movieDetails.storyline}</Typography>
             <Typography style={{marginTop:'16px'}} variant="body1" gutterBottom><b>Trailer: </b><YouTube videoId={getVideoIdFromTrailerURL()}></YouTube></Typography>
             
             </div>
+
+            {/* Right part of screen showing star rating and artists*/}
             <div id="movieDetailsRight">
                 <Typography variant="body1" gutterBottom><b>Rate this movie:</b></Typography>
                 <div>

@@ -2,15 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './Home.css'
 import { Fragment } from 'react';
 import Header from './../../common/header/Header.js'
-import LoginModal from './../../common/modal/LoginModal'
 import { Button, Card, CardContent, CardHeader, Checkbox, FormControl, FormHelperText, GridList, GridListTile, GridListTileBar, Input, InputLabel, ListItem, ListItemText, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
 import { createMuiTheme} from "@material-ui/core/styles";
-import { blue, red } from '@material-ui/core/colors';
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-
-import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import Details from './../details/Details'
 
 
 
@@ -23,6 +17,8 @@ const Home = function(props) {
     const [artists, setArtists] = useState([]);
     let [originalReleasedMovies, setOriginalReleasedMovies] = useState([]);
 
+    /*  Setting default values for movie filter form. 
+    Release dates have been set with values so that the movie release date will always fall within these values*/
     const [filterMovieForm, setFilterMovieForm] = useState({
         movieName:'',
         selectedGenres:[],
@@ -31,15 +27,17 @@ const Home = function(props) {
         selectedReleaseDateEnd:new Date('2099-01-01')
     });
 
+    const {movieName, selectedGenres, selectedArtists, selectedReleaseDateStart, selectedReleaseDateEnd} = filterMovieForm;
+
+    /*
+    function to handle any change in the movie filter form
+    */ 
     const inputChangedHandler = (e) => {
         const state = filterMovieForm;
         state[e.target.name] = e.target.value;
         setFilterMovieForm({...state})
     }
 
-    
- 
-    const {movieName, selectedGenres, selectedArtists, selectedReleaseDateStart, selectedReleaseDateEnd} = filterMovieForm;
 
     function isGenreSelected(currentGenre) {
         const filteredGenres = selectedGenres.filter((item) => {
@@ -100,6 +98,8 @@ const Home = function(props) {
     fetchArtists()
     }, [])
 
+    /*Function applies filter for values that have been input. For the fields for which values have not been selected or entered, 
+    the filter logic ensures to ignore the default values set when there is no value entered for a field*/
     function applyFilter() {
         const filteredMovies = originalReleasedMovies.filter((movie) => {
             const genresMatched = filterMovieForm.selectedGenres.some( ai => movie.genres.includes(ai) ) || filterMovieForm.selectedGenres.length == 0;
@@ -124,7 +124,7 @@ const Home = function(props) {
         setReleasedMovies(filteredMovies)
     }
 
-    function getReleaseDate(movie) {
+    function getReleaseDateInRequiredFormat(movie) {
         let date = new Date(movie.release_date)
         const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
         const requiredDate = date.toLocaleDateString("en-US", options)
@@ -148,6 +148,7 @@ const Home = function(props) {
 
 
             <div id="releasedMovies">
+                {/* Left side of screen that shows grid of released movies */}
                 <div id="releasedMovieChild1">
                     <GridList cellHeight={350} cols={4}>
                         { releasedMovies.map((movie) => (
@@ -155,20 +156,22 @@ const Home = function(props) {
                                     <Link to={"/movie/" + movie.id}>
                                     <img class="releasedMovieImage" src={movie.poster_url} alt={movie.title} />
                                     </Link>
-                                <GridListTileBar title={movie.title} subtitle={<span>Release Date: {getReleaseDate(movie)}</span>}/>
+                                <GridListTileBar title={movie.title} subtitle={<span>Release Date: {getReleaseDateInRequiredFormat(movie)}</span>}/>
                             </GridListTile>
                         ))}
                      </GridList>
                 </div>
+                {/* Right side of screen that shows a form to filter released movies */}
                 <div id="releasedMovieChild2">
                     <Card>
-                    
-                        <CardContent >
+                        <CardContent>
+                        {/* Movie filter form header */}
                         <Typography variant="headline" component="h3" style={{color:createMuiTheme().palette.primary.light}}>
                             FIND MOVIES BY:
                         </Typography>
 
-                        <FormControl  className="filterFormControl">
+                        {/* movie name filter field */}
+                        <FormControl>
                             <TextField
                                 label="Movie Name" 
                                 id="movieName"
@@ -180,17 +183,7 @@ const Home = function(props) {
                             </TextField>
                             </FormControl>
 
-                            
-                            {/* <Select label="Genre" id="selectedGenres" name="selectedGenres" multiple  value={selectedGenres} onChange={inputChangedHandler} 
-                                    value={selectedGenres} renderValue={(data) => data.join(", ")} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}>
-                                {genres.map((genreItem) => (
-                                <MenuItem key={genreItem.id} value={genreItem.genre}>
-                                    <Checkbox checked={isGenreSelected(genreItem)} />
-                                    <ListItemText primary={genreItem.genre} />
-                                </MenuItem>
-                                ))}
-                            </Select> */}
-
+                            {/* multiple genre selection filter field */}
                             <FormControl>
                                 <InputLabel htmlFor="selectedGenres" style={{ marginLeft: createMuiTheme().spacing.unit}}>Genre</InputLabel>
                                 <Select label="Genre" id="selectedGenres" name="selectedGenres" multiple  value={selectedGenres} onChange={inputChangedHandler} 
@@ -202,9 +195,9 @@ const Home = function(props) {
                                     </MenuItem>
                                     ))};
                                 </Select>
-                                
                             </FormControl>
 
+                            {/* multiple artists selection filter field */}
                             <FormControl>
                             <InputLabel htmlFor="selectedArtists" style={{ marginLeft: createMuiTheme().spacing.unit}}>Artist</InputLabel>
                             <Select id="selectedArtists" name="selectedArtists" multiple  value={selectedArtists} onChange={inputChangedHandler} 
@@ -218,14 +211,17 @@ const Home = function(props) {
                             </Select>
                             </FormControl>
 
+                            {/* release start date selection filter field */}
                             <FormControl>
                                 <TextField type="date" id="selectedReleaseDateStart" name="selectedReleaseDateStart" value={selectedReleaseDateStart} label="Release date start" onChange={inputChangedHandler} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}></TextField>
                             </FormControl>
                           
+                          {/* release end date selection filter field */}
                             <FormControl>
                                 <TextField type="date" id="selectedReleaseDateEnd" name="selectedReleaseDateEnd" value={selectedReleaseDateEnd} label="Release date end" onChange={inputChangedHandler} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}></TextField>
                             </FormControl>
                                 <br/><br/>
+                            {/* button to apply filter*/}
                             <FormControl>
                                     <Button variant="contained" color="primary" onClick={applyFilter} style={{ margin: createMuiTheme().spacing.unit, minWidth:240, maxWidth:240}}> APPLY </Button>
                           </FormControl>

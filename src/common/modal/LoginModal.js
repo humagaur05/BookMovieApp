@@ -4,7 +4,9 @@ import "./LoginModal.css";
 import Modal from "react-modal";
 import { Button, FormControl, FormHelperText, Input, InputLabel, Tab, Tabs } from "@material-ui/core";
 
-
+/*
+Login Modal component contains the tab view showing login and register forms
+*/
 export default function LoginModal(props) {
 
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -33,18 +35,20 @@ const [reqContact, setReqContact] = useState("dispNone");
 const [showRegLabel, setShowRegLabel] = useState(false)
 
 
+//Utility methods
+  const tabChangeHandler = (event, newValue) => {
+    setShowRegLabel(false);
+    setSelectedTab(newValue);
+  };
 
   function exitLoginModal() {
     props.history.push({
       pathname: "/"
     });
-
   }
 
-  const tabChangeHandler = (event, newValue) => {
-    setShowRegLabel(false);
-    setSelectedTab(newValue);
-  };
+
+  //Login form related methods
 
   const loginFormChangeHandler = (e) => {
         const state = loginForm;
@@ -64,37 +68,6 @@ const [showRegLabel, setShowRegLabel] = useState(false)
       return;
     }
     sendLoginRequest();
-    
-  };
-
-
-
-  const sendRegisterRequest = () => {
-      let data = JSON.stringify({
-        "email_address": registerForm.email,
-        "first_name": registerForm.firstname,
-        "last_name": registerForm.lastname,
-        "mobile_number": registerForm.contact,
-        "password": registerForm.password
-      });
-  
-      const url = props.baseUrl + "/signup";
-      fetch(props.baseUrl + "/signup", {
-        method: "POST",
-        body: data,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json;charset=UTF-8'
-      }
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setShowRegLabel(true);
-          console.log(data);
-        })
-        .catch(error => {
-          console.log('error', error)
-      });
   };
 
   const sendLoginRequest = () => {
@@ -126,33 +99,69 @@ const [showRegLabel, setShowRegLabel] = useState(false)
 };
 
 
-  const registerFormChangeHandler = (e) => {
-    const state = registerForm;
-    state[e.target.name] = e.target.value;
-    setRegisterForm({...state})
+ //Register form related methods
+
+ const registerFormChangeHandler = (e) => {
+  const state = registerForm;
+  state[e.target.name] = e.target.value;
+  setRegisterForm({...state})
 }
 
-const registerButtonHandler = () => {
-setShowRegLabel(false);
-registerForm.firstname === "" ? setReqFirstname("dispBlock") : setReqFirstname("dispNone");
-registerForm.lastname === "" ? setReqLastName("dispBlock") : setReqLastName("dispNone");
-registerForm.email === "" ? setReqEmail("dispBlock") : setReqEmail("dispNone");
-registerForm.password === "" ? setReqRegisterPassword("dispBlock") : setReqRegisterPassword("dispNone");
-registerForm.contact === "" ? setReqContact("dispBlock") : setReqContact("dispNone");
+ const registerButtonHandler = () => {
+  setShowRegLabel(false);
+  registerForm.firstname === "" ? setReqFirstname("dispBlock") : setReqFirstname("dispNone");
+  registerForm.lastname === "" ? setReqLastName("dispBlock") : setReqLastName("dispNone");
+  registerForm.email === "" ? setReqEmail("dispBlock") : setReqEmail("dispNone");
+  registerForm.password === "" ? setReqRegisterPassword("dispBlock") : setReqRegisterPassword("dispNone");
+  registerForm.contact === "" ? setReqContact("dispBlock") : setReqContact("dispNone");
+  
+  
+  if (
+    registerForm.firstname === "" ||
+    registerForm.lastname === "" ||
+    registerForm.email === "" ||
+    registerForm.password === "" ||
+    registerForm.contact === ""
+  ) {
+    return;
+  }
+  sendRegisterRequest()
+  };
 
+  const sendRegisterRequest = () => {
+      let data = JSON.stringify({
+        "email_address": registerForm.email,
+        "first_name": registerForm.firstname,
+        "last_name": registerForm.lastname,
+        "mobile_number": registerForm.contact,
+        "password": registerForm.password
+      });
+  
+      const url = props.baseUrl + "/signup";
+      fetch(props.baseUrl + "/signup", {
+        method: "POST",
+        body: data,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8'
+      }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setShowRegLabel(true);
+          console.log(data);
+        })
+        .catch(error => {
+          console.log('error', error)
+      });
+  };
 
-if (
-  registerForm.firstname === "" ||
-  registerForm.lastname === "" ||
-  registerForm.email === "" ||
-  registerForm.password === "" ||
-  registerForm.contact === ""
-) {
-  return;
-}
-sendRegisterRequest()
-//exitLoginModal()
-};
+/*
+Tabs contained within modal component
+On change of tab, based on the currently selected tab either the login div is shown or the register div is shown
+selectedTab = 0, show login div
+otherwise, show register div
+*/ 
 
   return (
     <div >
@@ -206,6 +215,9 @@ sendRegisterRequest()
   );
 }
 
+/*
+Created separate functional components for LoginDiv and RegisterDiv to make code readable
+*/ 
 
 function LoginDiv(props) {
 
