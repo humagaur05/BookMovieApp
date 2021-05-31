@@ -11,11 +11,13 @@ const Header =  function Header(props) {
 
     const buttonText = props.isLoggedIn ? "Logout" : "Login"
     
-    if(!props.isDetailsPage) {
+    if(!props.isDetails) {
     return(
         <div className="header">
            <img id="headerIcon" src={logo} alt="logo" className="rotate"/>
+           <Link to={"/modal"}>
             <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
+            </Link>
         </div>
     );
     } else {
@@ -27,7 +29,9 @@ const Header =  function Header(props) {
                     <Button id="bookButton" variant="contained" color="primary"> Book show </Button>
                 </Link>
                     <span id="spaceSpan"></span>
-                    <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
+                    <Link to={"/modal"}>
+                        <Button id="loginButton" variant="contained" color="default"> {buttonText}</Button>
+                    </Link>
                 </span>    
             </div>
         );

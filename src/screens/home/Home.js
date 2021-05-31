@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './Home.css'
 import { Fragment } from 'react';
 import Header from './../../common/header/Header.js'
-import { Button, Card, CardContent, CardHeader, Checkbox, FormControl, FormHelperText, GridList, GridListTile, GridListTileBar, Input, InputLabel, ListItem, ListItemText, MenuItem, Select, TextField, Typography } from '@material-ui/core';
+import LoginModal from './../../common/modal/LoginModal'
+import { Button, Card, CardContent, CardHeader, Checkbox, FormControl, FormHelperText, GridList, GridListTile, GridListTileBar, Input, InputLabel, ListItem, ListItemText, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
 import { createMuiTheme} from "@material-ui/core/styles";
 import { blue, red } from '@material-ui/core/colors';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -114,14 +115,22 @@ const Home = function(props) {
             const movieDate = new Date(movie.release_date)
             const releaseStartDate = new Date(filterMovieForm.selectedReleaseDateStart)
             const releaseEndDate = new Date(filterMovieForm.selectedReleaseDateEnd)
-            const isBeforeEndReleaseDate =  movieDate <= releaseEndDate
-            const isAfterStartReleaseDate = movieDate >= releaseStartDate
+            const isBeforeEndReleaseDate =  movieDate <= releaseEndDate || (releaseEndDate == Date('1500-01-01'))
+            const isAfterStartReleaseDate = movieDate >= releaseStartDate || (releaseStartDate ==  Date('2099-01-01'))
             const isWithinDateRange = isBeforeEndReleaseDate && isAfterStartReleaseDate
             return (movieTitleMatched && genresMatched && artistsMatched && isWithinDateRange) 
         })
 
         setReleasedMovies(filteredMovies)
     }
+
+    function getReleaseDate(movie) {
+        let date = new Date(movie.release_date)
+        const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+        const requiredDate = date.toLocaleDateString("en-US", options)
+        return requiredDate
+    }
+
 
     return (
         <Fragment>
@@ -146,7 +155,7 @@ const Home = function(props) {
                                     <Link to={"/movie/" + movie.id}>
                                     <img class="releasedMovieImage" src={movie.poster_url} alt={movie.title} />
                                     </Link>
-                                <GridListTileBar title={movie.title} subtitle={<span>Release date:: {Date(movie.release_date)}</span>}/>
+                                <GridListTileBar title={movie.title} subtitle={<span>Release Date: {getReleaseDate(movie)}</span>}/>
                             </GridListTile>
                         ))}
                      </GridList>
@@ -224,7 +233,7 @@ const Home = function(props) {
                     </Card>
                 </div>
             </div>
-
+        
         </Fragment>
     );
 }

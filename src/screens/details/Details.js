@@ -57,7 +57,7 @@ const Details = function(props) {
 
     return(
         <Fragment>
-        <Header isLoggedIn={false} isDetailsPage={true} movieId={props.match.params.id}></Header>
+        <Header isLoggedIn={false} isDetails={true} movieId={props.match.params.id}></Header>
         <Link to="/">
             <Typography className="custom-btn" variant="button" display="block" gutterBottom> &#60; Back to Home</Typography>
         </Link>
