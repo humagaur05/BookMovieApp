@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { Button, FormControl, FormHelperText, Input, InputLabel, Tab, Tabs } from "@material-ui/core";
 
 /*
-Login Modal component contains the tab view showing login and register forms
+Login Modal component contains the tab view showing login and register forms.
 */
 export default function LoginModal(props) {
 
